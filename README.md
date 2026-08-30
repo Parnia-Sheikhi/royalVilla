@@ -1,6 +1,6 @@
 Royal Villa
 
-A full-stack villa booking and management platform built with a layered ASP.NET Core architecture — a versioned REST API on one side and an MVC web frontend on the other, sharing a common DTO library.
+A full-stack villa booking and management platform built with a layered ASP.NET Core architecture, a versioned REST API on one side and an MVC web frontend on the other, sharing a common DTO library.
 
 Overview
 
