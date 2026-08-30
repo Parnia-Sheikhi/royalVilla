@@ -13,7 +13,7 @@ Versioned REST API (v1/v2), documented with Scalar
 Full CRUD for villas and villa amenities (with a one-to-many relationship between them)
 AutoMapper for mapping between EF Core entities and DTOs
 A standardized ApiResponse<T> wrapper so every endpoint returns a consistent success/error shape
-EF Core Code-First migrations against SQL Server (6 migrations, from the initial schema to seeded data)
+EF Core Code-First migrations against SQL Server
 MVC frontend with cookie-based auth, consuming the API through a typed HttpClient
 Tech Stack
 
@@ -32,6 +32,6 @@ Run the RoyalVillaWeb project
 
 The API docs (Scalar) are available at /scalar in development mode.
 
-Roadmap / Known Limitations
-Passwords are currently stored in plain text — swapping in BCrypt or ASP.NET Identity for password hashing is a planned improvement
+Known Limitations
+Passwords are currently stored in plain text swapping in BCrypt or ASP.NET Identity for password hashing is a planned improvement
 No automated tests yet
