@@ -1,37 +1,45 @@
-Royal Villa
+# Royal Villa
 
-A full-stack villa booking and management platform built with a layered ASP.NET Core architecture, a versioned REST API on one side and an MVC web frontend on the other, sharing a common DTO library.
+A villa management app I built with ASP.NET Core. It's split into three projects: a REST API, an MVC web app that talks to the API, and a small shared library for the DTOs.
 
-Overview
+I made it to get comfortable with structuring a .NET solution in layers instead of putting everything in one project.
 
-Royal Villa lets customers browse and view villas, while admins manage the full catalog (villas + amenities) through role-protected endpoints. The project was built to practice a production-style layered .NET architecture: separating the API, the presentation layer, and the data-transfer contracts into independent projects instead of one monolithic app.
-Structure: royalVilla.API (REST API) / RoyalVillaWeb (MVC frontend) / RoyalVilla.DtO (shared DTOs)
+## Projects
 
-Features
-JWT authentication with role-based authorization (Admin, Customer)
-Versioned REST API (v1/v2), documented with Scalar
-Full CRUD for villas and villa amenities (with a one-to-many relationship between them)
-AutoMapper for mapping between EF Core entities and DTOs
-A standardized ApiResponse<T> wrapper so every endpoint returns a consistent success/error shape
-EF Core Code-First migrations against SQL Server
-MVC frontend with cookie-based auth, consuming the API through a typed HttpClient
-Tech Stack
+- `royalVilla.API` – the Web API (controllers, EF Core, JWT auth)
+- `RoyalVillaWeb` – the MVC front end (Bootstrap views, cookie login)
+- `RoyalVilla.DtO` – DTOs shared by both projects
 
-Backend: ASP.NET Core Web API, Entity Framework Core, SQL Server, AutoMapper, JWT Bearer Authentication, Scalar (API docs) Frontend: ASP.NET Core MVC, Bootstrap, Cookie Authentication Tooling: EF Core Migrations, API Versioning
+## What it does
 
-Getting Started
-Prerequisites
-.NET SDK
-SQL Server (LocalDB or full instance)
-Setup
-Clone the repo
-Update the DefaultConnection string in royalVilla.API/appsettings.json
-Run the API project — migrations are applied automatically on startup
-Update ServiceUrls:VillaAPI in RoyalVillaWeb/appsettings.json to point to the running API
-Run the RoyalVillaWeb project
+- Register and log in. The API returns a JWT, and the web app keeps the user logged in with a cookie.
+- Two roles: `Admin` and `Customer`. The villa create, edit and delete endpoints require the Admin role.
+- CRUD for villas (name, details, rate, sqft, occupancy, image).
+- CRUD for villa amenities. Each villa can have many amenities.
+- Every API response comes back in the same `ApiResponse<T>` shape, so success and error handling on the web side stays simple.
 
-The API docs (Scalar) are available at /scalar in development mode.
+## Tech
 
-Known Limitations
-Passwords are currently stored in plain text swapping in BCrypt or ASP.NET Identity for password hashing is a planned improvement
-No automated tests yet
+- ASP.NET Core (.NET 10), Web API + MVC
+- Entity Framework Core with SQL Server, code-first migrations
+- AutoMapper for entity <-> DTO mapping
+- JWT bearer authentication
+- API versioning and Scalar for the API docs
+- Bootstrap for the UI
+
+## Running it
+
+1. Clone the repo.
+2. Set `ConnectionStrings:DefaultConnection` in `royalVilla.API/appsettings.json` to your own SQL Server.
+3. Set a JWT secret under `JwSettings:Secret` (I'd use `dotnet user-secrets` for this instead of committing it).
+4. Run `royalVilla.API`. Migrations are applied on startup, so there's no need to run `update-database`.
+5. Make sure `ServiceUrls:VillaAPI` in `RoyalVillaWeb/appsettings.json` matches the address the API is running on.
+6. Run `RoyalVillaWeb`.
+
+In development the API docs are at `/scalar`.
+
+## Next steps
+
+- Password hashing
+- Tests
+- API v2
